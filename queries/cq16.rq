@@ -1,0 +1,20 @@
+# CQ 16: Which events have decisions in force (not superseded, rejected or abandoned) based on a given article? (example: GDPR Art. 33)
+# In force = not superseded, and the status is a member of ds:DecisionProgression (Exploring, Decided, Implemented)
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX tf:   <https://anniechiang-data.framer.website/ontology/talentflow#>
+PREFIX tfs:  <https://anniechiang-data.framer.website/ontology/talentflow-sample#>
+PREFIX ds:   <https://anniechiang-data.framer.website/vocab/decision-status#>
+
+SELECT ?event ?decisionLabel ?statusLabel WHERE {
+  ?event tf:hasDecision ?decision .
+  ?decision tf:basedOnRegulation tfs:gdprArt33 ;
+            rdfs:label ?decisionLabel ;
+            tf:hasDecisionStatus ?status .
+  ds:DecisionProgression skos:memberList/rdf:rest*/rdf:first ?status .
+  FILTER NOT EXISTS { ?newer tf:supersedes ?decision }
+  ?status skos:prefLabel ?statusLabel .
+  FILTER(LANGMATCHES(LANG(?decisionLabel), "en"))
+  FILTER(LANGMATCHES(LANG(?statusLabel), "en"))
+} ORDER BY ?event

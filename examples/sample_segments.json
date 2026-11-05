@@ -1,0 +1,139 @@
+[
+  {
+    "segment_id": "900_001",
+    "title": "Fictional title A",
+    "text": "Fictional text A",
+    "notes": "[REASON] fictional note A",
+    "decision_status": "Exploring",
+    "maturity": 0.3,
+    "importance": 0.5,
+    "valid_from": "2026-03-02",
+    "valid_to": "",
+    "superseded_by": "900_002",
+    "related_segments": [
+      "900_003"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Technical"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "900_002",
+    "title": "Fictional title B",
+    "text": "Fictional text B",
+    "notes": "[REASON] fictional note B",
+    "decision_status": "Decided",
+    "maturity": 0.8,
+    "importance": 0.7,
+    "valid_from": "2026-03-20",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [
+      "Finish the SPARQL course first"
+    ],
+    "conflict_with": [
+      "900_004"
+    ],
+    "merge_target": "",
+    "L1_codes": [
+      "Technical"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "900_003",
+    "title": "Fictional title C",
+    "text": "Fictional text C",
+    "notes": "[REASON] fictional note C",
+    "decision_status": "Informational",
+    "maturity": 0.6,
+    "importance": 0.4,
+    "valid_from": "2026-02-11",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "900_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Career"
+    ],
+    "annotation_date": "2026-06-21",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "900_004",
+    "title": "Fictional title D",
+    "text": "Fictional text D",
+    "notes": "[REASON] fictional note D",
+    "decision_status": "Abandoned",
+    "maturity": 0.5,
+    "importance": 0.3,
+    "valid_from": "2026-01-15",
+    "valid_to": "2026-03-20",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [
+      "900_002"
+    ],
+    "merge_target": "",
+    "L1_codes": [
+      "Career",
+      "Personal"
+    ],
+    "annotation_date": "2026-06-21",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "900_005",
+    "title": "Fictional title E (dirty)",
+    "text": "Fictional text E",
+    "notes": "[QUALITY] deliberately dirty record",
+    "decision_status": "Confirmed",
+    "maturity": 1.7,
+    "importance": null,
+    "valid_from": "2026/04/01",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "see 900_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "900_099",
+    "L1_codes": [
+      "Other"
+    ],
+    "annotation_date": "2026-06-22",
+    "annotator": "annotator-1"
+  },
+  {
+    "title": "Record without an ID (dirty)",
+    "text": "Fictional text F",
+    "notes": "",
+    "decision_status": "Exploring"
+  },
+  {
+    "segment_id": "901_000",
+    "title": "Fictional title G",
+    "text": "Fictional text G",
+    "notes": "Only the 11 experiment fields",
+    "decision_status": "",
+    "maturity": null,
+    "importance": null,
+    "valid_from": "2026-05-05",
+    "related_segments": [],
+    "prerequisites": [],
+    "L1_codes": []
+  }
+]

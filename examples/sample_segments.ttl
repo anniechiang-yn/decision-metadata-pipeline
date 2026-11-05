@@ -1,0 +1,72 @@
+@prefix conv: <https://anniechiang-data.framer.website/data/conversation/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ds: <https://anniechiang-data.framer.website/vocab/decision-status#> .
+@prefix seg: <https://anniechiang-data.framer.website/ontology/segment#> .
+@prefix segd: <https://anniechiang-data.framer.website/data/segment/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+segd:900_005 a seg:Segment ;
+    dcterms:identifier "900_005" ;
+    dcterms:isPartOf conv:900 ;
+    dcterms:subject "Other" ;
+    seg:annotatedOn "2026-06-22"^^xsd:date ;
+    seg:annotator "annotator-1" ;
+    seg:mergedInto segd:900_099 .
+
+segd:901_000 a seg:Segment ;
+    dcterms:identifier "901_000" ;
+    dcterms:isPartOf conv:901 ;
+    seg:validFrom "2026-05-05"^^xsd:date .
+
+segd:900_001 a seg:Segment ;
+    dcterms:identifier "900_001" ;
+    dcterms:isPartOf conv:900 ;
+    dcterms:isReplacedBy segd:900_002 ;
+    dcterms:relation segd:900_003 ;
+    dcterms:subject "Technical" ;
+    seg:annotatedOn "2026-06-20"^^xsd:date ;
+    seg:annotator "annotator-1" ;
+    seg:hasDecisionStatus ds:Exploring ;
+    seg:importance 0.5 ;
+    seg:maturity 0.3 ;
+    seg:validFrom "2026-03-02"^^xsd:date .
+
+segd:900_003 a seg:Segment ;
+    dcterms:identifier "900_003" ;
+    dcterms:isPartOf conv:900 ;
+    dcterms:relation segd:900_001 ;
+    dcterms:subject "Career" ;
+    seg:annotatedOn "2026-06-21"^^xsd:date ;
+    seg:annotator "annotator-1" ;
+    seg:hasDecisionStatus ds:Informational ;
+    seg:importance 0.4 ;
+    seg:maturity 0.6 ;
+    seg:validFrom "2026-02-11"^^xsd:date .
+
+segd:900_004 a seg:Segment ;
+    dcterms:identifier "900_004" ;
+    dcterms:isPartOf conv:900 ;
+    dcterms:subject "Career",
+        "Personal" ;
+    seg:annotatedOn "2026-06-21"^^xsd:date ;
+    seg:annotator "annotator-1" ;
+    seg:conflictsWith segd:900_002 ;
+    seg:hasDecisionStatus ds:Abandoned ;
+    seg:importance 0.3 ;
+    seg:maturity 0.5 ;
+    seg:validFrom "2026-01-15"^^xsd:date ;
+    seg:validTo "2026-03-20"^^xsd:date .
+
+segd:900_002 a seg:Segment ;
+    dcterms:identifier "900_002" ;
+    dcterms:isPartOf conv:900 ;
+    dcterms:subject "Technical" ;
+    seg:annotatedOn "2026-06-20"^^xsd:date ;
+    seg:annotator "annotator-1" ;
+    seg:conflictsWith segd:900_004 ;
+    seg:hasDecisionStatus ds:Decided ;
+    seg:importance 0.7 ;
+    seg:maturity 0.8 ;
+    seg:prerequisiteNote "Finish the SPARQL course first" ;
+    seg:validFrom "2026-03-20"^^xsd:date .
+

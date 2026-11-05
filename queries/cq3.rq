@@ -1,0 +1,18 @@
+# CQ 3: How many events are there under each decision status?
+# Current status of an event = status of its latest decision (latest decidedAt); each event is counted once
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX tf:   <https://anniechiang-data.framer.website/ontology/talentflow#>
+
+SELECT ?statusLabel (COUNT(DISTINCT ?event) AS ?events) WHERE {
+  ?event tf:hasDecision ?decision .
+  ?decision tf:decidedAt ?decidedAt ;
+            tf:hasDecisionStatus ?status .
+  FILTER NOT EXISTS {
+    ?event tf:hasDecision ?other .
+    ?other tf:decidedAt ?otherAt .
+    FILTER(?otherAt > ?decidedAt)
+  }
+  ?status skos:prefLabel ?statusLabel .
+  FILTER(LANGMATCHES(LANG(?statusLabel), "en"))
+} GROUP BY ?statusLabel
+  ORDER BY DESC(?events)

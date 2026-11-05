@@ -1,0 +1,147 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ds:   <https://anniechiang-data.framer.website/vocab/decision-status#> .
+
+#################################################################
+# Ontology header (allows the vocabulary to be loaded via owl:imports)
+#################################################################
+
+<https://anniechiang-data.framer.website/vocab/decision-status> a owl:Ontology ;
+    owl:versionIRI <https://anniechiang-data.framer.website/vocab/decision-status/1.1.0> ;
+    owl:versionInfo "1.1.0" .
+
+#################################################################
+# Concept Scheme
+#################################################################
+
+ds:DecisionStatusScheme a skos:ConceptScheme ;
+    dct:title "Decision Status Vocabulary"@en ;
+    dct:title "決策狀態受控詞彙"@zh-hant ;
+    dct:description "A controlled vocabulary describing the decision state of a conversational segment. Developed as the metadata layer of a retrieval-augmented generation experiment over a corpus of 1,014 segments drawn from 66 conversations, where the values were originally held as a free-string field."@en ;
+    dct:creator "Annie Chiang" ;
+    dct:created "2026-08-10"^^xsd:date ;
+    dct:modified "2026-11-03"^^xsd:date ;
+    dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+    dct:language "en", "zh-hant" ;
+    owl:versionInfo "1.1.0" ;
+    skos:hasTopConcept ds:DecisionBearing , ds:Informational ;
+    skos:note "The vocabulary does not define a concept for the absence of an assignment. A record whose status is empty is unassigned, which is a data quality state rather than a decision state, and is handled by the application rather than by this vocabulary. In the source corpus one record of 47 is unassigned."@en ;
+    skos:note "Two axes are represented. The first axis records whether a segment carries decision intent at all, and is expressed by the two top concepts. The second axis records the stage a decision has reached, and is expressed by the six narrower concepts of ds:DecisionBearing."@en ;
+    skos:changeNote "Version 1.1.0 (2026-11-03): added ds:Rejected as a narrower concept of ds:DecisionBearing, to distinguish a formal refusal by a deciding party from ds:Abandoned, where a course of action is dropped without a ruling. The distinction is required where decisions are audited for compliance."@en .
+
+#################################################################
+# Top Concepts
+#################################################################
+
+ds:DecisionBearing a skos:Concept ;
+    skos:notation "DECISION_BEARING" ;
+    skos:prefLabel "Decision-bearing"@en ;
+    skos:prefLabel "具決策意圖"@zh-hant ;
+    skos:altLabel "Action-oriented"@en ;
+    skos:definition "A segment in which a choice between courses of action is at stake, whether that choice is still open, committed to, executed, dropped or replaced."@en ;
+    skos:scopeNote "Structural concept. Not assigned to segments directly during indexing; always assign one of its narrower concepts. Retained in the scheme so that a query can retrieve every decision-related segment in one traversal along skos:narrower."@en ;
+    skos:topConceptOf ds:DecisionStatusScheme ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+ds:Informational a skos:Concept ;
+    skos:notation "INFORMATIONAL" ;
+    skos:prefLabel "Informational"@en ;
+    skos:prefLabel "資訊性"@zh-hant ;
+    skos:altLabel "Background"@en ;
+    skos:altLabel "Knowledge-seeking"@en ;
+    skos:definition "A segment whose purpose is to establish factual understanding, with no course of action at stake."@en ;
+    skos:scopeNote "Assign when the segment concerns what is the case rather than what to do. The test is whether an action space exists: if no alternative courses of action are present or implied, the segment is informational even where the subject matter is operational. Where explanatory material is stated in order to settle an open choice within the same segment, assign ds:Exploring instead; ds:Informational applies only when the explanation stands alone."@en ;
+    skos:example "A segment explaining how a visa category works, with no discussion of whether to apply for it."@en ;
+    skos:topConceptOf ds:DecisionStatusScheme ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+#################################################################
+# Decision Stages
+#################################################################
+
+ds:Exploring a skos:Concept ;
+    skos:notation "EXPLORING" ;
+    skos:prefLabel "Exploring"@en ;
+    skos:prefLabel "評估中"@zh-hant ;
+    skos:altLabel "Under consideration"@en ;
+    skos:altLabel "Open"@en ;
+    skos:definition "A segment in which options are being weighed and no commitment has yet been made."@en ;
+    skos:scopeNote "Assign when at least two courses of action remain live, or when a single option is stated together with unresolved conditions. Conditional framing without a commitment marker resolves to this concept. Where a preference is expressed but the choice is explicitly left open, this concept still applies; ds:Decided requires that the alternatives be closed off."@en ;
+    skos:example "A segment comparing two visa routes and listing the trade-offs of each, ending without a choice."@en ;
+    skos:broader ds:DecisionBearing ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+ds:Decided a skos:Concept ;
+    skos:notation "DECIDED" ;
+    skos:prefLabel "Decided"@en ;
+    skos:prefLabel "已決定"@zh-hant ;
+    skos:altLabel "Committed"@en ;
+    skos:definition "A segment recording a commitment to a course of action that has not yet been carried out."@en ;
+    skos:scopeNote "Assign when the alternatives are closed off and the commitment is stated, but the segment contains no evidence that the action has taken place. Where the same segment records both the commitment and its execution, assign ds:Implemented, on the rule that the later stage takes precedence within a single segment. A commitment that is later reversed is still assigned this concept at the point it was made; the reversal is recorded on the segment that reverses it."@en ;
+    skos:example "A segment stating that Germany will be the primary target market and other markets are set aside."@en ;
+    skos:broader ds:DecisionBearing ;
+    skos:related ds:Implemented ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+ds:Implemented a skos:Concept ;
+    skos:notation "IMPLEMENTED" ;
+    skos:prefLabel "Implemented"@en ;
+    skos:prefLabel "已執行"@zh-hant ;
+    skos:altLabel "Executed"@en ;
+    skos:altLabel "Carried out"@en ;
+    skos:definition "A segment containing evidence that a committed course of action has been carried out."@en ;
+    skos:scopeNote "Assign only on evidence of the action having occurred, not on an intention to act or a scheduled date. A segment describing a plan to act next week remains ds:Decided. This concept is not terminal: an implemented decision may later be replaced, in which case the replacing segment carries ds:Superseded."@en ;
+    skos:example "A segment reporting that the application was submitted and acknowledged."@en ;
+    skos:broader ds:DecisionBearing ;
+    skos:related ds:Decided ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+ds:Abandoned a skos:Concept ;
+    skos:notation "ABANDONED" ;
+    skos:prefLabel "Abandoned"@en ;
+    skos:prefLabel "已放棄"@zh-hant ;
+    skos:altLabel "Dropped"@en ;
+    skos:definition "A segment recording that a course of action has been dropped without a replacement being adopted."@en ;
+    skos:scopeNote "Assign when the segment withdraws a course of action and no successor is adopted in its place. Where a successor is adopted, assign ds:Superseded instead. Where the corpus is ambiguous as to whether a successor exists, assign this concept: it is the weaker claim, since ds:Superseded asserts the existence of an identifiable replacement."@en ;
+    skos:example "A segment closing off a line of research after the cost was found to be prohibitive, with nothing adopted in its place."@en ;
+    skos:broader ds:DecisionBearing ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+ds:Superseded a skos:Concept ;
+    skos:notation "SUPERSEDED" ;
+    skos:prefLabel "Superseded"@en ;
+    skos:prefLabel "已被取代"@zh-hant ;
+    skos:altLabel "Replaced"@en ;
+    skos:altLabel "Overridden"@en ;
+    skos:definition "A segment recording a decision that a later decision has replaced, so that it no longer states the current intent."@en ;
+    skos:scopeNote "Assignment is retrospective and depends on evidence outside the segment being described: a replacing decision must be identifiable elsewhere in the corpus. A segment therefore acquires this concept at annotation time rather than at the time it was written, and its status may change as the corpus grows. Where the replacing decision cannot be identified, assign ds:Abandoned."@en ;
+    skos:editorialNote "The relation to the replacing decision is not expressible in SKOS, which has no vocabulary for stating that one resource replaces another instance-to-instance. In this scheme it is carried in the scope note only. Formalisation is deferred to the OWL layer, where the replacement relation and the two time axes it depends on can be modelled directly."@en ;
+    skos:example "A segment selecting one tooling option, where a later segment adopts a different tool for the same purpose."@en ;
+    skos:historyNote "As of version 1.0 no record in the source corpus carries this concept. It is retained because the state it describes is well defined and expected to occur as the corpus grows, but any claim that the vocabulary is evidenced by use should exclude it."@en ;
+    skos:broader ds:DecisionBearing ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+ds:Rejected a skos:Concept ;
+    skos:notation "REJECTED" ;
+    skos:prefLabel "Rejected"@en ;
+    skos:prefLabel "已否決"@zh-hant ;
+    skos:altLabel "Declined"@en ;
+    skos:altLabel "Not approved"@en ;
+    skos:definition "A segment recording that a proposed course of action has been formally refused by a party with authority to decide, so that it was not adopted."@en ;
+    skos:scopeNote "Assign when the segment records an explicit refusal by a deciding party, such as an approver, a review body or a regulator. Where a course of action is dropped by those pursuing it, without a ruling, assign ds:Abandoned instead. Where the corpus is ambiguous as to whether a formal refusal took place, assign ds:Abandoned: it is the weaker claim, since this concept asserts that a ruling was made. A refusal followed by the adoption of a different course of action is still assigned this concept on the refused proposal; ds:Superseded applies only to a decision that was adopted and later replaced."@en ;
+    skos:example "A segment reporting that a review board declined a proposed architecture change."@en ;
+    skos:historyNote "Added in version 1.1.0. No record in the source corpus of version 1.0 carries this concept; it was introduced for compliance tracking, where a formal refusal must be distinguishable from a dropped proposal."@en ;
+    skos:broader ds:DecisionBearing ;
+    skos:inScheme ds:DecisionStatusScheme .
+
+#################################################################
+# Ordered Collection
+#################################################################
+
+ds:DecisionProgression a skos:OrderedCollection ;
+    skos:prefLabel "Decision progression"@en ;
+    skos:prefLabel "決策推進序列"@zh-hant ;
+    skos:note "The canonical order in which a decision advances. Expressed as an ordered collection rather than a hierarchy because sequence is not a relation of meaning, and asserting it through skos:broader would make the hierarchy inconsistent with the intent axis. ds:Abandoned, ds:Rejected and ds:Superseded are exits from the sequence rather than stages within it, and are therefore excluded. Constraints on permitted transitions are not expressible here and are deferred to the OWL layer."@en ;
+    skos:memberList ( ds:Exploring ds:Decided ds:Implemented ) .

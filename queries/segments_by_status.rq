@@ -1,0 +1,14 @@
+# Segments: how many decision-bearing segments are there under each status?
+# skos:broader* walks every status under DecisionBearing in one step, so no status is listed by hand
+PREFIX seg:  <https://anniechiang-data.framer.website/ontology/segment#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX ds:   <https://anniechiang-data.framer.website/vocab/decision-status#>
+
+SELECT ?statusLabel (COUNT(?segment) AS ?segments) WHERE {
+  ?segment a seg:Segment ;
+           seg:hasDecisionStatus ?status .
+  ?status skos:broader* ds:DecisionBearing ;
+          skos:prefLabel ?statusLabel .
+  FILTER(LANGMATCHES(LANG(?statusLabel), "en"))
+} GROUP BY ?statusLabel
+  ORDER BY DESC(?segments)

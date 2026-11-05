@@ -1,0 +1,11 @@
+# CQ 10: Which decisions replaced decision D, along the full chain? (example: D2a)
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX tf:   <https://anniechiang-data.framer.website/ontology/talentflow#>
+PREFIX tfs:  <https://anniechiang-data.framer.website/ontology/talentflow-sample#>
+
+SELECT ?later ?label ?decidedAt WHERE {
+  tfs:d2a ^tf:supersedes+ ?later .
+  ?later rdfs:label ?label ;
+         tf:decidedAt ?decidedAt .
+  FILTER(LANGMATCHES(LANG(?label), "en"))
+} ORDER BY ?decidedAt
