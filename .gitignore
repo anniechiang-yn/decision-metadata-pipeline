@@ -1,0 +1,12 @@
+# Python
+.venv/
+__pycache__/
+
+# Local outputs and database (may contain real annotation data)
+output/
+store/
+*.log
+
+# TalentFlow files are downloaded from the talentflow-ontology repository
+data/talentflow.ttl
+data/talentflow-sample-data.ttl
