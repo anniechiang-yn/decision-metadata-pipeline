@@ -83,7 +83,7 @@ python scripts/run_queries.py
 | `cq10.rq` | Which decisions replaced decision D2a, along the full chain? | Property path |
 | `cq16.rq` | Which decisions still in force are based on GDPR Art. 33? | `FILTER NOT EXISTS`, SKOS ordered collection |
 
-The three CQ queries come from [talentflow-ontology](https://github.com/anniechiang-yn/talentflow-ontology). They are included to show that the same queries return the same results from GraphDB and, through Python, from Oxigraph. Only the comment lines differ from the originals.
+The three CQ queries come from [talentflow-ontology](https://github.com/anniechiang-yn/talentflow-ontology). They are included to show that the same queries return the same results from GraphDB and, through Python, from Oxigraph.
 
 ## Known limitations
 
