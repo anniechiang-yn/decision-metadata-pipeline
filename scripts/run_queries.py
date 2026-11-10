@@ -1,12 +1,16 @@
-# Script 5: send SPARQL queries from Python to a local endpoint (Oxigraph) and print the results
-# Input:  .rq files in queries/; endpoint http://localhost:7878/query (start it with oxigraph serve)
-# Output: one result table per query, printed to the terminal
-# Steps:  1 read the .rq file  2 send it and get JSON back  3 turn the JSON into rows  4 print a table
+"""Script 5: send SPARQL queries from Python to a local endpoint (Oxigraph) and print the results.
 
+Usage:  python scripts/run_queries.py     (start the endpoint first with: oxigraph serve --location store)
+Input:  .rq files in the queries folder and the endpoint, both set in config.json
+Output: one result table per query, printed to the terminal; an unreachable endpoint is logged as an error
+Steps:  1 read the .rq file  2 send it and get JSON back  3 turn the JSON into rows  4 print a table
+"""
+
+import sys
 from pathlib import Path
+from urllib.error import URLError
 from SPARQLWrapper import SPARQLWrapper, JSON
-
-ENDPOINT = "http://localhost:7878/query"
+from common import get_logger, load_config
 
 # Queries to run: (title, file name)
 QUERIES = [
@@ -17,10 +21,10 @@ QUERIES = [
 ]
 
 
-def run_query(rq_file):
+def run_query(endpoint, rq_path):
     """Run the query in one .rq file; return (column names, rows)."""
-    sparql = SPARQLWrapper(ENDPOINT)
-    sparql.setQuery(Path("queries", rq_file).read_text(encoding="utf-8"))
+    sparql = SPARQLWrapper(endpoint)
+    sparql.setQuery(Path(rq_path).read_text(encoding="utf-8"))
     sparql.setReturnFormat(JSON)
     data = sparql.queryAndConvert()
     columns = data["head"]["vars"]
@@ -47,7 +51,17 @@ def print_table(title, columns, rows):
     print(f"  ({len(rows)} rows)")
 
 
-if __name__ == "__main__":
+def main():
+    config = load_config()
+    log = get_logger("queries")
     for title, rq_file in QUERIES:
-        columns, rows = run_query(rq_file)
+        try:
+            columns, rows = run_query(config["endpoint"], Path(config["paths"]["queries"], rq_file))
+        except URLError:
+            log.error("Cannot reach %s. Is the endpoint running (oxigraph serve --location store)?", config["endpoint"])
+            sys.exit(1)
         print_table(title, columns, rows)
+
+
+if __name__ == "__main__":
+    main()

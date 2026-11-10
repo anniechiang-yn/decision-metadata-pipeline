@@ -1,0 +1,31 @@
+[
+  {
+    "segment_id": "990_000",
+    "decision_status": "DecisionBearing",
+    "valid_from": "2026-04-01",
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "990_001",
+    "decision_status": "Decided",
+    "valid_from": "2026-05-10",
+    "valid_to": "2026-03-10",
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "990_002",
+    "decision_status": "Exploring",
+    "valid_from": "2026-02-01",
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "990_002",
+    "decision_status": "Decided",
+    "valid_from": "2026-02-01",
+    "annotation_date": "2026-06-25",
+    "annotator": "annotator-2"
+  }
+]

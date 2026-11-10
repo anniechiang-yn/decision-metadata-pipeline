@@ -1,0 +1,97 @@
+# SHACL shapes for segment metadata produced by scripts/convert_batch.py.
+# Rules follow docs/mapping.md.
+# Validate the data graph together with data/decision-status.ttl:
+# the status rule reads skos:inScheme and skos:broader from the vocabulary.
+
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix seg:     <https://anniechiang-data.framer.website/ontology/segment#> .
+@prefix ds:      <https://anniechiang-data.framer.website/vocab/decision-status#> .
+
+# ---------------------------------------------------------------
+# Segment
+# ---------------------------------------------------------------
+
+seg:SegmentShape a sh:NodeShape ;
+    rdfs:label "Segment shape"@en ;
+    rdfs:comment "Checks every seg:Segment against the field rules in docs/mapping.md."@en ;
+    sh:targetClass seg:Segment ;
+
+    # Identity
+    sh:property [
+        sh:path dcterms:identifier ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path dcterms:isPartOf ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:nodeKind sh:IRI ;
+    ] ;
+
+    # Decision status: optional (empty values are not converted), at most one,
+    # and must be an assignable concept of the vocabulary.
+    sh:property [
+        sh:path seg:hasDecisionStatus ;
+        sh:maxCount 1 ;
+        sh:node seg:AssignableStatusShape ;
+    ] ;
+
+    # Scores between 0 and 1
+    sh:property [
+        sh:path seg:maturity ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ; sh:maxInclusive 1 ;
+    ] ;
+    sh:property [
+        sh:path seg:importance ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0 ; sh:maxInclusive 1 ;
+    ] ;
+
+    # Dates
+    sh:property [
+        sh:path seg:validFrom ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:lessThanOrEquals seg:validTo ;
+    ] ;
+    sh:property [
+        sh:path seg:validTo ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+    ] ;
+    sh:property [
+        sh:path seg:annotatedOn ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+    ] ;
+
+    # Links to other segments: IRIs only. The target segment is not required
+    # to be in the same graph (a merge target may sit outside the sample).
+    sh:property [ sh:path dcterms:isReplacedBy ; sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path dcterms:relation ;    sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path seg:conflictsWith ;   sh:nodeKind sh:IRI ] ;
+    sh:property [ sh:path seg:mergedInto ;      sh:nodeKind sh:IRI ] .
+
+# ---------------------------------------------------------------
+# Decision status value
+# ---------------------------------------------------------------
+
+seg:AssignableStatusShape a sh:NodeShape ;
+    rdfs:label "Assignable status shape"@en ;
+    rdfs:comment "A status value must be a concept of the Decision Status Vocabulary with no narrower concept. Structural concepts such as ds:DecisionBearing are excluded without being listed, so new concepts in the vocabulary need no change here."@en ;
+    sh:class skos:Concept ;
+    sh:property [
+        sh:path skos:inScheme ;
+        sh:hasValue ds:DecisionStatusScheme ;
+    ] ;
+    sh:property [
+        sh:path [ sh:inversePath skos:broader ] ;
+        sh:maxCount 0 ;
+    ] .

@@ -1,10 +1,14 @@
-# Script 1: list every concept in the Decision Status Vocabulary with its labels and definition
-# Input:  data/decision-status.ttl
-# Output: prints each concept's English label, Chinese label and definition
-# Steps:  1 parse the file into a Graph  2 find every skos:Concept  3 print labels and definition
+"""Script 1: list every concept in the Decision Status Vocabulary with its labels and definition.
+
+Usage:  python scripts/list_concepts.py
+Input:  the vocabulary file set in config.json (paths.vocabulary)
+Output: prints each concept's English label, Chinese label and definition
+Steps:  1 parse the file into a Graph  2 find every skos:Concept  3 print labels and definition
+"""
 
 from rdflib import Graph, RDF
 from rdflib.namespace import SKOS
+from common import load_config
 
 
 def pick_lang(g, subject, predicate, lang):
@@ -15,18 +19,25 @@ def pick_lang(g, subject, predicate, lang):
     return None
 
 
-# Step 1: parse
-g = Graph()
-g.parse("data/decision-status.ttl")
-print("Triples:", len(g))
+def main():
+    config = load_config()
 
-# Step 2: find all concepts, sorted by notation so the output order is stable
-concepts = sorted(g.subjects(RDF.type, SKOS.Concept),
-                  key=lambda c: str(g.value(c, SKOS.notation)))
-print("Concepts:", len(concepts))
+    # Step 1: parse
+    g = Graph()
+    g.parse(config["paths"]["vocabulary"])
+    print("Triples:", len(g))
 
-# Step 3: print
-for c in concepts:
-    print()
-    print(pick_lang(g, c, SKOS.prefLabel, "en"), "/", pick_lang(g, c, SKOS.prefLabel, "zh-hant"))
-    print("  Definition:", g.value(c, SKOS.definition))
+    # Step 2: find all concepts, sorted by notation so the output order is stable
+    concepts = sorted(g.subjects(RDF.type, SKOS.Concept),
+                      key=lambda c: str(g.value(c, SKOS.notation)))
+    print("Concepts:", len(concepts))
+
+    # Step 3: print
+    for c in concepts:
+        print()
+        print(pick_lang(g, c, SKOS.prefLabel, "en"), "/", pick_lang(g, c, SKOS.prefLabel, "zh-hant"))
+        print("  Definition:", g.value(c, SKOS.definition))
+
+
+if __name__ == "__main__":
+    main()

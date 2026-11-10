@@ -1,0 +1,15 @@
+{
+  "paths": {
+    "vocabulary": "data/decision-status.ttl",
+    "shapes": "shapes/segment-shapes.ttl",
+    "queries": "queries",
+    "output": "output"
+  },
+  "endpoint": "http://localhost:7878/query",
+  "namespaces": {
+    "seg": "https://anniechiang-data.framer.website/ontology/segment#",
+    "segd": "https://anniechiang-data.framer.website/data/segment/",
+    "conv": "https://anniechiang-data.framer.website/data/conversation/",
+    "ds": "https://anniechiang-data.framer.website/vocab/decision-status#"
+  }
+}
