@@ -1,8 +1,8 @@
 # Decision Metadata Pipeline
 
-Converts segment-level decision metadata from AI conversation logs (JSON) into RDF, links each segment's decision status to a SKOS controlled vocabulary, validates the result with SHACL, and queries it over a SPARQL endpoint from Python.
+Converts segment-level decision metadata from AI conversation logs (JSON) into RDF, links each segment's decision status to a SKOS controlled vocabulary, validates the result with SHACL, and queries it over a SPARQL endpoint from Python. A small demo then uses the graph to filter candidates before vector retrieval.
 
-Version 1.0. All data in this repository is fictional.
+Version 1.1. All data in this repository is fictional.
 
 ## Why
 
@@ -26,6 +26,21 @@ SPARQL endpoint (Oxigraph, local)
 query results
 ```
 
+## Demo: filtering before vector retrieval
+
+Six queries over 24 fictional segments, each run with and without a decision-status filter and ranked with a local embedding model (bge-m3). It shows a mechanism and makes no claim about retrieval performance: the corpus is small, fictional and written to contain the hard cases.
+
+| Query | No filter | Filter first | With linked segments |
+|---|---|---|---|
+| D1 current CV retention rule | 1 / 2 | 2 / 2 | |
+| D2 can the AI reject automatically | 1 / 2 | 2 / 2 | |
+| D3 dropped or refused proposals | 3 / 6 | 3 / 6 | |
+| D4 options still being evaluated | 2 / 4 | 3 / 4 | |
+| D5 what the law requires | 1 / 1 | 0 / 1 | 1 / 1 |
+| D6 history of one decision | 1 / 4 | 1 / 4 | 1 / 4 |
+
+Each cell: segments in the top three that are in the expected answer / size of the expected answer. The filter removes superseded and abandoned segments that plain similarity ranks first (D1, D2). It changes nothing where the question's wording already selects the right statuses (D3), removes the answer when the answer is informational (D5, restored by following links), and does not help a question about a topic's history (D6). Design, limitations, the reading of each result and how this differs from GraphRAG: [docs/demo.md](docs/demo.md).
+
 ## Known limitations
 
 - SHACL checks structure, not meaning. A segment labelled Exploring that should have been Decided passes.
@@ -34,6 +49,7 @@ query results
 - The experiment's JSON has 11 of the 17 annotation fields. Missing fields are skipped and logged; the mapping and the shapes cover all 17, so rules on fields such as `valid_to` are only exercised by the sample and test data.
 - Oxigraph does not run OWL reasoning, so questions that depend on inferred classes are not answered here.
 - Load each file into the store once. Loading a file twice creates a second copy of its blank nodes (for example the ordered list in the vocabulary), and CQ 16 then returns every row twice. Step 4 below starts from an empty store for this reason.
+- The demo filter takes the status condition as given; it does not work out the condition from the question. A concept name that is not in the vocabulary returns no segments rather than an error.
 - The leak check only catches free text copied verbatim into the output.
 
 ## What has been checked
@@ -44,7 +60,9 @@ query results
 | SHACL, clean data | Converted sample | Conforms (0 violations) |
 | SHACL, dirty data | `tests/dirty_segments.json` (3 errors the converter cannot see) | 3 of 3 caught (4 violations, see below); the converter logged none of them |
 | Queries | Sample data and the TalentFlow files | CQ 3, 10 and 16 return the same results as in GraphDB |
-| Python | — | Scripts run on Python 3.13 and 3.9 |
+| Filter and expansion | `demo/corpus.json` (24 fictional segments), six cases worked out by hand | 6 of 6 pass (`scripts/check_filter.py`) |
+| Comparison | Six demo queries, bge-m3 | One run, recorded in `demo/comparison.md` |
+| Python | — | Pipeline scripts run on Python 3.13 and 3.9; demo scripts run on 3.13 |
 
 The three test errors:
 
@@ -64,10 +82,12 @@ The three test errors:
 | `data/decision-status.ttl` | Copy of the [Decision Status Vocabulary](https://github.com/anniechiang-yn/decision-status-skos) v1.1.0 |
 | `examples/` | Fictional input (`sample_segments.json`) and the converter's output for it |
 | `tests/dirty_segments.json` | Fictional input with three errors for the SHACL test |
+| `demo/` | Fictional corpus with text (`corpus.json`), the six queries with expected answers (`queries.json`), and the recorded comparison |
 | `queries/` | SPARQL queries |
 | `docs/mapping.md` | Field-by-field mapping from JSON to RDF |
+| `docs/demo.md` | Design, limitations and results of the demo |
 
-Real annotation data is converted, validated and queried locally only; `.gitignore` excludes `output/` and the database folder.
+Real annotation data is converted, validated and queried locally only; `.gitignore` excludes `output/` and the database folders.
 
 ## Scripts
 
@@ -81,6 +101,10 @@ Real annotation data is converted, validated and queried locally only; `.gitigno
 | `convert_batch.py` | Converts a JSON file to Turtle; invalid values are logged and skipped, and nothing is written if a free-text field would leak into the output |
 | `validate.py` | Validates a Turtle file against the shapes; prints one line per violation, writes the full report (text and RDF), exits with 1 if the data does not conform |
 | `run_queries.py` | Sends the queries in `queries/` to the local endpoint and prints the results |
+| `filter_segments.py` | Demo. Returns the segments whose status matches a concept or lies below it; returns the segments that given segments link to, with or without superseded, abandoned and rejected ones |
+| `check_filter.py` | Demo. Checks the filter and the expansion against six cases worked out by hand; exits with 1 if any fails |
+| `embed.py` | Demo. Gets vectors from a local embedding model through Ollama, with a cache; computes cosine similarity |
+| `compare.py` | Demo. Runs each query without the filter, with it, and with linked segments, and writes the results side by side |
 
 Each script starts with a docstring giving its usage, input, output and steps. Run all scripts from the repository root.
 
@@ -119,6 +143,8 @@ python scripts/run_queries.py
 
 To change a path, the endpoint or a namespace, edit `config.json`.
 
+The demo uses its own store and needs Ollama; its steps are in [docs/demo.md](docs/demo.md#run-it).
+
 ## Design decisions
 
 - **Two layers of checking.** The converter checks one value at a time (format, range, known concept) and skips what it cannot convert. SHACL checks what a single value cannot show: the order of two dates, duplicate records, and whether a status is a structural concept.
@@ -126,7 +152,9 @@ To change a path, the endpoint or a namespace, edit `config.json`.
 - **At most one status, checked by SHACL rather than OWL.** Declaring the property functional in OWL would make a reasoner conclude that two different status values are the same concept (OWL has no unique name assumption), hiding the error. SHACL reports it.
 - **Empty status is not converted.** An unassigned record is a data-quality state, not a decision state, so the status is optional in the shapes.
 - **`seg:hasDecisionStatus`, not the TalentFlow property.** `tf:hasDecisionStatus` has the domain `tf:Decision`, so a reasoner would classify every segment as a TalentFlow decision.
-- **Settings in one file.** Paths, the endpoint and namespaces live in `config.json`. JSON rather than TOML, because Python reads JSON without extra packages on every supported version.
+- **The demo filters through the vocabulary hierarchy.** The query matches a concept and everything below it with `skos:broader*`, so a condition can name a broader concept and a new status needs no code change.
+- **Linked segments are added after filtering, with a history switch.** A hard filter on decision statuses also drops the informational segments that decisions rest on; following `dcterms:relation` from the results brings them back. Whether superseded, abandoned and rejected segments come back too depends on the question: left out for the current state, kept for the history of a decision. Every result is shown with its status.
+- **Settings in one file.** Paths, the endpoint, namespaces and the embedding model live in `config.json`. JSON rather than TOML, because Python reads JSON without extra packages on every supported version.
 
 ## Licence
 

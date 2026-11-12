@@ -11,5 +11,16 @@
     "segd": "https://anniechiang-data.framer.website/data/segment/",
     "conv": "https://anniechiang-data.framer.website/data/conversation/",
     "ds": "https://anniechiang-data.framer.website/vocab/decision-status#"
+  },
+  "embedding": {
+    "url": "http://localhost:11434/api/embed",
+    "model": "bge-m3",
+    "cache": "output/embed_cache.json"
+  },
+  "demo": {
+    "corpus": "demo/corpus.json",
+    "queries": "demo/queries.json",
+    "result": "output/comparison.md",
+    "top_k": 3
   }
 }

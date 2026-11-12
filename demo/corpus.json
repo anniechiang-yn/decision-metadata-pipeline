@@ -1,0 +1,534 @@
+[
+  {
+    "segment_id": "101_000",
+    "title": "Storage limitation",
+    "text": "Under GDPR, personal data may be kept no longer than needed for its purpose. For a rejected candidate, the purpose ends when the vacancy is filled, unless the candidate agrees to stay in a talent pool.",
+    "notes": "",
+    "decision_status": "Informational",
+    "maturity": 0.9,
+    "importance": 0.6,
+    "valid_from": "2026-01-12",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "101_001",
+    "title": "CV retention: 12 months",
+    "text": "We decided to keep the CVs of rejected candidates for 12 months after the vacancy closes, so recruiters can contact them about similar roles.",
+    "notes": "",
+    "decision_status": "Superseded",
+    "maturity": 0.8,
+    "importance": 0.8,
+    "valid_from": "2026-01-12",
+    "valid_to": "2026-03-09",
+    "superseded_by": "101_003",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "101_002",
+    "title": "CV retention: indefinite",
+    "text": "We dropped the idea of keeping the CVs of rejected candidates indefinitely in the talent pool. Nobody could justify an open-ended retention period.",
+    "notes": "",
+    "decision_status": "Abandoned",
+    "maturity": 0.8,
+    "importance": 0.5,
+    "valid_from": "2026-01-12",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "101_003",
+    "title": "CV retention: 6 months",
+    "text": "We decided to keep the CVs of rejected candidates for 6 months after the vacancy closes. This replaces the 12-month rule after legal review.",
+    "notes": "",
+    "decision_status": "Decided",
+    "maturity": 0.9,
+    "importance": 0.9,
+    "valid_from": "2026-03-09",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "101_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "101_004",
+    "title": "Opt-in talent pool",
+    "text": "We are considering letting rejected candidates opt in to a 12-month talent pool, with a reminder email before their CV is deleted. No decision yet.",
+    "notes": "",
+    "decision_status": "Exploring",
+    "maturity": 0.3,
+    "importance": 0.5,
+    "valid_from": "2026-03-09",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "101_003"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "101_005",
+    "title": "Automatic CV deletion",
+    "text": "The automatic deletion job for CVs older than 6 months after the vacancy closes went live in the applicant tracking system on 1 April.",
+    "notes": "",
+    "decision_status": "Implemented",
+    "maturity": 1.0,
+    "importance": 0.8,
+    "valid_from": "2026-04-01",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "101_003"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "102_000",
+    "title": "AI Act and recruitment",
+    "text": "Under the EU AI Act, AI systems used to filter or rank job applications are classed as high-risk. Organisations using them must ensure human oversight and keep the system logs.",
+    "notes": "",
+    "decision_status": "Informational",
+    "maturity": 0.9,
+    "importance": 0.8,
+    "valid_from": "2026-02-02",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "102_001",
+    "title": "AI shortlist with human review",
+    "text": "We decided that the AI ranking tool may only suggest a shortlist. A recruiter must review every application before a rejection is sent.",
+    "notes": "",
+    "decision_status": "Decided",
+    "maturity": 0.9,
+    "importance": 0.9,
+    "valid_from": "2026-02-02",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "102_000"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "102_002",
+    "title": "Automatic AI rejections",
+    "text": "We dropped the plan to let the AI ranking tool send rejections automatically, without a recruiter reviewing the application.",
+    "notes": "",
+    "decision_status": "Abandoned",
+    "maturity": 0.8,
+    "importance": 0.7,
+    "valid_from": "2026-02-02",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "102_003",
+    "title": "AI personality scoring",
+    "text": "The works council formally refused our proposal to use the AI tool to score candidates' personality from their cover letters.",
+    "notes": "",
+    "decision_status": "Rejected",
+    "maturity": 0.9,
+    "importance": 0.7,
+    "valid_from": "2026-02-16",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "102_004",
+    "title": "Telling candidates about AI",
+    "text": "We are weighing whether to tell candidates in the job advert that an AI tool helps rank applications, or only in the privacy notice.",
+    "notes": "",
+    "decision_status": "Exploring",
+    "maturity": 0.4,
+    "importance": 0.6,
+    "valid_from": "2026-02-16",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "102_000"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "102_005",
+    "title": "Mandatory recruiter review",
+    "text": "The recruiter review step is now mandatory in the applicant tracking system: a rejection cannot be sent until a recruiter has opened the application.",
+    "notes": "",
+    "decision_status": "Implemented",
+    "maturity": 1.0,
+    "importance": 0.9,
+    "valid_from": "2026-03-02",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "102_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "103_000",
+    "title": "Transfers outside the EU",
+    "text": "Moving candidate data outside the EU needs a legal basis, such as an adequacy decision or standard contractual clauses with the recipient.",
+    "notes": "",
+    "decision_status": "Informational",
+    "maturity": 0.9,
+    "importance": 0.6,
+    "valid_from": "2026-01-19",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "103_001",
+    "title": "EU hosting",
+    "text": "We decided to host all candidate data in an EU data centre and to require EU hosting from any new recruitment software vendor.",
+    "notes": "",
+    "decision_status": "Decided",
+    "maturity": 0.9,
+    "importance": 0.9,
+    "valid_from": "2026-03-16",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "103_003"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "103_002",
+    "title": "US backup region",
+    "text": "We dropped the plan to back up candidate data to a US cloud region for disaster recovery.",
+    "notes": "",
+    "decision_status": "Abandoned",
+    "maturity": 0.8,
+    "importance": 0.5,
+    "valid_from": "2026-01-19",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "103_003",
+    "title": "Contract clauses with US vendor",
+    "text": "We decided to sign standard contractual clauses with our US vendor and keep using its hosting for candidate data.",
+    "notes": "",
+    "decision_status": "Superseded",
+    "maturity": 0.8,
+    "importance": 0.8,
+    "valid_from": "2026-01-19",
+    "valid_to": "2026-03-16",
+    "superseded_by": "103_001",
+    "related_segments": [
+      "103_000"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "103_004",
+    "title": "Choosing an EU vendor",
+    "text": "We are comparing two EU-based applicant tracking systems. The choice depends on their data processing agreements.",
+    "notes": "",
+    "decision_status": "Exploring",
+    "maturity": 0.3,
+    "importance": 0.6,
+    "valid_from": "2026-03-16",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "103_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "103_005",
+    "title": "Migration to EU data centre",
+    "text": "All candidate records were migrated to the EU data centre in May, and the old US-hosted copies were deleted.",
+    "notes": "",
+    "decision_status": "Implemented",
+    "maturity": 1.0,
+    "importance": 0.8,
+    "valid_from": "2026-05-04",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "103_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "104_000",
+    "title": "Recording interviews",
+    "text": "Recording a video interview processes personal data. Candidates must be told the purpose of the recording and how long it is kept.",
+    "notes": "",
+    "decision_status": "Informational",
+    "maturity": 0.9,
+    "importance": 0.5,
+    "valid_from": "2026-04-13",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "104_001",
+    "title": "Recording with consent",
+    "text": "We decided to record video interviews only when the candidate explicitly agrees, and to delete recordings 30 days after the hiring decision.",
+    "notes": "",
+    "decision_status": "Decided",
+    "maturity": 0.9,
+    "importance": 0.8,
+    "valid_from": "2026-04-13",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "104_000"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "104_002",
+    "title": "Recording for recruiter training",
+    "text": "Management formally refused the proposal to record all video interviews by default to train new recruiters.",
+    "notes": "",
+    "decision_status": "Rejected",
+    "maturity": 0.9,
+    "importance": 0.6,
+    "valid_from": "2026-04-13",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "104_003",
+    "title": "Opt-out recording",
+    "text": "We dropped the idea of recording video interviews by default and asking candidates to opt out if they object.",
+    "notes": "",
+    "decision_status": "Abandoned",
+    "maturity": 0.8,
+    "importance": 0.6,
+    "valid_from": "2026-04-13",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "104_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "104_004",
+    "title": "Phone interview alternative",
+    "text": "We are considering offering a phone interview to candidates who do not want to be on camera.",
+    "notes": "",
+    "decision_status": "Exploring",
+    "maturity": 0.3,
+    "importance": 0.4,
+    "valid_from": "2026-04-27",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "104_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  },
+  {
+    "segment_id": "104_005",
+    "title": "Consent in scheduling form",
+    "text": "The interview scheduling form now asks for recording consent, and recordings are deleted automatically 30 days after the hiring decision.",
+    "notes": "",
+    "decision_status": "Implemented",
+    "maturity": 1.0,
+    "importance": 0.7,
+    "valid_from": "2026-05-11",
+    "valid_to": "",
+    "superseded_by": "",
+    "related_segments": [
+      "104_001"
+    ],
+    "prerequisites": [],
+    "conflict_with": [],
+    "merge_target": "",
+    "L1_codes": [
+      "Compliance"
+    ],
+    "annotation_date": "2026-06-20",
+    "annotator": "annotator-1"
+  }
+]

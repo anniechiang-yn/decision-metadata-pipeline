@@ -1,0 +1,97 @@
+[
+  {
+    "id": "D1",
+    "query": "How long do we keep the CVs of rejected candidates?",
+    "concepts": [
+      "Decided",
+      "Implemented"
+    ],
+    "expand": false,
+    "keep_history": false,
+    "standard": "A",
+    "expected": [
+      "101_003",
+      "101_005"
+    ]
+  },
+  {
+    "id": "D2",
+    "query": "Can the AI tool reject candidates automatically?",
+    "concepts": [
+      "Decided",
+      "Implemented"
+    ],
+    "expand": false,
+    "keep_history": false,
+    "standard": "A",
+    "expected": [
+      "102_001",
+      "102_005"
+    ]
+  },
+  {
+    "id": "D3",
+    "query": "Which proposals were dropped or refused?",
+    "concepts": [
+      "Abandoned",
+      "Rejected"
+    ],
+    "expand": false,
+    "keep_history": false,
+    "standard": "A",
+    "expected": [
+      "101_002",
+      "102_002",
+      "102_003",
+      "103_002",
+      "104_002",
+      "104_003"
+    ]
+  },
+  {
+    "id": "D4",
+    "query": "What are we still evaluating?",
+    "concepts": [
+      "Exploring"
+    ],
+    "expand": false,
+    "keep_history": false,
+    "standard": "A",
+    "expected": [
+      "101_004",
+      "102_004",
+      "103_004",
+      "104_004"
+    ]
+  },
+  {
+    "id": "D5",
+    "query": "What does the law require when we use AI to screen applications?",
+    "concepts": [
+      "Decided",
+      "Implemented"
+    ],
+    "expand": true,
+    "keep_history": false,
+    "standard": "A",
+    "expected": [
+      "102_000"
+    ]
+  },
+  {
+    "id": "D6",
+    "query": "What have we considered or decided before about letting the AI tool reject candidates automatically?",
+    "concepts": [
+      "DecisionBearing"
+    ],
+    "expand": true,
+    "keep_history": true,
+    "standard": "B",
+    "expected": [
+      "102_000",
+      "102_001",
+      "102_002",
+      "102_005"
+    ]
+  }
+]
