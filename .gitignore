@@ -5,6 +5,7 @@ __pycache__/
 # Local outputs and database (may contain real annotation data)
 output/
 store/
+store-demo/
 *.log
 
 # TalentFlow files are downloaded from the talentflow-ontology repository
